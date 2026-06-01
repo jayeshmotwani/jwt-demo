@@ -81,7 +81,7 @@ export default function TamperDemo({ token }) {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch("/api/verify", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token: editedToken }),

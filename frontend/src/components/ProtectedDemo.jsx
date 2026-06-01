@@ -63,7 +63,7 @@ export default function ProtectedDemo({ token }) {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch("/api/protected", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/protected`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
