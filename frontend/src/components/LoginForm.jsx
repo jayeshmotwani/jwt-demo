@@ -59,7 +59,7 @@ export default function LoginForm({ onToken }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "Login failed");
-      onToken(data.token);
+      onToken({ access_token: data.access_token, refresh_token: data.refresh_token });
     } catch (err) {
       setError(err.message);
     } finally {
