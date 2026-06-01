@@ -1,0 +1,42 @@
+# systemd unit file for a codecrumbs.in FastAPI demo backend.
+# Place this file at: /etc/systemd/system/DEMO_NAME.service
+# Then run:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable DEMO_NAME
+#   sudo systemctl start DEMO_NAME
+
+[Unit]
+# Human-readable name shown in `systemctl status`.
+# TODO: Replace with your concept name.
+Description=codecrumbs demo — TODO: Concept Name
+
+# Don't start this service until the network is up.
+After=network.target
+
+[Service]
+# Run as this system user. Create a dedicated user with:
+#   sudo useradd -r -s /bin/false codecrumbs
+# TODO: Replace with the user you want to run the process as.
+User=codecrumbs
+
+# Absolute path to the backend directory.
+# TODO: Replace DEMO_NAME with your concept slug.
+WorkingDirectory=/var/www/DEMO_NAME/backend
+
+# Load environment variables from the .env file.
+# Copy backend/.env.example to this path and fill in values.
+EnvironmentFile=/var/www/DEMO_NAME/backend/.env
+
+# Command to launch the app.
+# --host 127.0.0.1 binds only to loopback — Nginx proxies public traffic.
+# --port must match PORT in nginx/demo.conf.
+# TODO: Replace PORT with your chosen port number.
+ExecStart=/var/www/DEMO_NAME/venv/bin/uvicorn main:app --host 127.0.0.1 --port PORT
+
+# Restart the process if it crashes, with a 5-second cooldown.
+Restart=on-failure
+RestartSec=5
+
+[Install]
+# Enable this service to start automatically at boot (multi-user runlevel).
+WantedBy=multi-user.target

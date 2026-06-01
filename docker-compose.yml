@@ -1,0 +1,36 @@
+# Optional: local development with Docker.
+# Run: docker compose up --build
+# Backend → http://localhost:8000
+# Frontend → http://localhost:5173 (with /api proxy to backend)
+#
+# NOTE: This is a convenience wrapper for local dev only.
+# Production deployments use Nginx + systemd (see nginx/ and systemd/).
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile   # TODO: create a simple Dockerfile if you want Docker support
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      # Mount source so code changes reload without a rebuild (uvicorn --reload)
+      - ./backend:/app
+    working_dir: /app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile   # TODO: create a simple Dockerfile if you want Docker support
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules        # Keep container node_modules separate from host
+    working_dir: /app
+    command: npm run dev -- --host
+    depends_on:
+      - backend
