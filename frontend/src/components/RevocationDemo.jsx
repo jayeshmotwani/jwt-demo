@@ -82,7 +82,7 @@ export default function RevocationDemo({ token }) {
     setLoading(true);
     setProveResult(null);
     try {
-      const res = await fetch("/api/protected", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/protected`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -97,7 +97,7 @@ export default function RevocationDemo({ token }) {
   async function handleRevoke() {
     setRevokeLoading(true);
     try {
-      const res = await fetch("/api/logout", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/logout`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });

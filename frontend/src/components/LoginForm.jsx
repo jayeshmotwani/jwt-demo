@@ -52,7 +52,7 @@ export default function LoginForm({ onToken }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

@@ -127,7 +127,7 @@ export default function RefreshDemo({ token, refreshToken, onNewToken }) {
     const prevPayload = getPayload(token);
     setOldClaims(prevPayload);
     try {
-      const res = await fetch("/api/refresh", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE}/refresh`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ refresh_token: refreshToken }),
