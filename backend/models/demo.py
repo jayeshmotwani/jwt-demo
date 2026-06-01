@@ -1,11 +1,22 @@
 from pydantic import BaseModel
+from typing import Optional, Any
 
 
-class DemoRequest(BaseModel):
-    # TODO: Add fields that match what your demo's UI sends
-    input: str
+class LoginRequest(BaseModel):
+    username: str
+    password: str
 
 
-class DemoResponse(BaseModel):
-    # TODO: Add fields that match what your demo's UI expects back
-    message: str
+class LoginResponse(BaseModel):
+    token: str
+
+
+class VerifyRequest(BaseModel):
+    token: str
+
+
+class VerifyResponse(BaseModel):
+    valid: bool
+    payload: Optional[Any] = None
+    error_type: Optional[str] = None
+    error_message: Optional[str] = None
